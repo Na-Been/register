@@ -23,6 +23,15 @@
             <label for="id_full_name">Full Name</label>
             {{ form.full_name }}
         </div>
+
+        {% comment %} to print the error message for the each field {% endcomment %}
+        {% if form.full_name.errors %}
+            <div class="invalid-feedback">
+                {% for error in form.full_name.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     
         <div class="form-group">
             <label for="id_email">Email</label>
