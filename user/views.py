@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib import messages
 from django.core.exceptions import ValidationError
-# from . forms import RegistrationForm
+
+from . forms import ProfileForm
+from .models import Profile
 
 # Create your views here.
 
@@ -51,21 +53,25 @@ def register(request):
         return render(request, 'user/register.html')
 
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             # Save the new user
-#             user = form.save(commit=False)
-#             user.set_password(form.cleaned_data['password1'])  # Hash the password
-#             user.save()
+def showForm(request):
+    if request.method == 'POST':
+        # Instantiate the form with POST data and FILES data
+        form = ProfileForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            # Save the form data (including image)
+            form.save()
+            # Redirect to another page (you can modify the redirect URL as needed)
+            return redirect('form')  # Replace with the name of your success page or list view
+            
+    else:
+        # If the request method is GET, create an empty form
+        form = ProfileForm()
 
-#             # Automatically log in the user after registration
-#             login(request, user)
+    # Render the form in the template
+    return render(request,'user/form.html',{'form':form})
 
-#             # Redirect to a success page or home
-#             return redirect('home')  # You can change 'home' to the name of your home page URL
-#     else:
-#         form = RegistrationForm()
-
-#     return render(request, 'register.html', {'form': form})
+def profile_list(request):
+    # Get the most recently created profile or all profiles
+    profiles = Profile.objects.all()  
+    return render(request, 'user/profile_list.html', {'profiles': profiles})

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+   
+<h1>Profile List</h1>
+
+<div class="row">
+    {% for profile in profiles %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ profile.image.url }}" class="card-img-top" alt="Profile Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ profile.full_name }}</h5>
+                    <p class="card-text">
+                        <strong>Email:</strong> {{ profile.email }}<br>
+                        <strong>Address:</strong> {{ profile.address }}<br>
+                        <strong>Gender:</strong> {{ profile.gender }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+    
+</body>
+</html>
+
+
